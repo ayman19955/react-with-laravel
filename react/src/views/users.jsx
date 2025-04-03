@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react"
 import axiosClient from "../axios-client"
-
+import { Link } from "react-router-dom";
 export default function users() {
   const {users,setUsers} = useState([])
-  const {loading ,setLoading } = useState(false)
-  useEffect(()=>{
+  const [loading ,setLoading]  = useState(false)
+
+  useEffect(() => {
+
+
     getUsers();
-  },[])
+  }, []);
   const getUsers=()=>{
-    axiosClient.get('/users')
     setLoading(true)
+    axiosClient.get('/users')
     .then(({data})=>{
       setLoading(false)
-      console.log(data);
-
     })
     .catch(()=>{
       setLoading(false)
@@ -21,7 +22,13 @@ export default function users() {
   }
   return (
       <div>
-          Users
+          <div style={{ display: 'flex', justifyContent: 'space-between' ,alignItems: 'center'}}>
+            <h1>Users</h1>
+            <Link to={'/users/new'} className="btn-add">Add new</Link>
+          </div>
+          <div className="card animated fadeInDown">
+            <table ></table>
+          </div>
       </div>
   )
 }
